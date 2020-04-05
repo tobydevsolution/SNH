@@ -13,9 +13,14 @@ $department = $_POST['department'];
 $errorArray = [];
 
 //verifying the data validation
-if($firstname == "") {
+    if($firstname == "") {
 
     $errorArray = "firstname cannot be empty";
-}
+    }
+
+    if($lastname == "") {
+
+        $errorArray = "lastname cannot be empty";
+        }
 
 print_r($errorArray);
