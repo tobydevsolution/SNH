@@ -23,4 +23,10 @@ $errorArray = [];
         $errorArray = "lastname cannot be empty";
         }
 
+
+    if($email == "") {
+
+        $errorArray = "email cannot be empty";
+    }
+
 print_r($errorArray);
