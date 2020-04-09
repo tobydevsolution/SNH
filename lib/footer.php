@@ -9,7 +9,7 @@
          
         <a href="index.php">Home</a>
         <a href="login.php">login</a>
-        <a href="register.php">register</a>
+        <a href="register.php">Register</a>
         <a href="forgot.php">Reset password</a>
         
         
