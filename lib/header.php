@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-    .jumbotron {
+    .jumbotron 
+    {
         width:50vw;
         height:100vh;
     }
