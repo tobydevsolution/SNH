@@ -1,162 +1,162 @@
 
-    <?php  session_start();
-    $_SESSION['TESTING'] = " testing session";
+    <?php include_once 'lib/header.php';  require_once('functions/alert.php');
+     
+      if(isset($_SESSION['loggedIn']) && !empty($_SESSION['loggedIn'])) {
+          //redirect to dashboard
+         
+          header("Location: dashboard.php");
 
-    //print_r($_SESSION);
-    include_once('lib/header.php');
-    
-        ?>
-
-
-<p> <strong> Welcome, Please Register </strong> </p>
-    <p> All Fields are required </p>
+      }
+      ?>
+        
+<h2 style="text-align: center"> <strong> Welcome, Please Register </strong> </h2>
+    <p style="text-align: center"> All Fields are required </p>
 
     <form method="POST" action="processingregister.php">
-        <?php 
-            if( isset( $_SESSION['error']) && !empty( $_SESSION['error'])) {
-                echo "<span style='color:red'>" .  $_SESSION['error'] . "</span>";
-               
-               
-            
-            }
-
-            ?>
-    <p> <label>Firstname </label><br>
+    <p>
+        <?php print_alert(); ?>
+            </p>
+    <div class="form-field">
+        <h3 class="section-title">FirstName</h3>
         <input
-        <?php 
-        if( isset( $_SESSION['error']) && !empty( $_SESSION['firstname'])) {
-                echo "value" .  $_SESSION['firstname'];
-                $_SESSION['firstname'] = " ";
-                  
-            }else {
-                echo "value = 'something wrong";
-            }
-            ?>
-        type ="text" name="firstname" placeholder= "firstname"/>
-    </p>
 
-    <p>  <label>Lastname </label><br>
-        <input
         <?php
-        if( isset( $_SESSION['error']) && !empty( $_SESSION['lastname'])) {
-                echo "value" .  $_SESSION['lastname'];
-                $_SESSION['lastname'] = " ";
-                  
-            }
-
-            ?> 
-         type ="text" name="lastname" placeholder="lastname"/>
-
-    </p>
-
-    <p>  <label>Email </label><br>
-        <input
-        <?php
-           if( isset( $_SESSION['email'])) {
-            echo "value" .  $_SESSION['email'];
-            $_SESSION['email'] = " ";
-              
-        }
-
-            ?>
-         type ="text" name="email" placeholder="email"/>
-
-    </p>
-       
-
-    <p>  <label>Password </label><br>
-        <input
-        <?php
-         
-              
+          if(isset($_SESSION['firstname'])) {
+              echo " value =" .  $_SESSION['firstname'];
+             
+          }
         
-    
             ?>
-        
-        type ="password" name="password" placeholder="password"/>
-
-    </p>
        
-    <p>  
-        <label> Gender </label><br>
-         <select name="gender"> 
+        type ="text" class="text" name="firstname" placeholder= "firstname"/>
+    </div>
+
+<div class="form-field">
+     <h3 class="section-title">LastName</h3>
+    <input
+
+        <?php
+          if(isset($_SESSION['lastname'])) {
+              echo " value =" .  $_SESSION['lastname'];
+             
+           
+          }
+        
+            ?>
+      
+         type ="text" class="text" name="lastname" placeholder="lastname"/>
+
+    </div>
+    <div class="form-field">
+    <h3 class="section-title">Email</h3>
+        <input
+
+        <?php
+          if(isset($_SESSION['email'])) {
+              echo " value =" .  $_SESSION['email'];
+        
+          }
+        
+            ?>
+         type ="text" class="text" name="email" placeholder="email"/>
+
+    </div>
+
+<div class="form-field">
+<h3 class="section-title">Password</h3>
+        <input
+      
+        
+        type ="password" class="text" name="password" placeholder="password"/>
+
+    </div>
+       
+    <div class="form-field"> 
+    <h3 class="section-title">Gender</h3>
+         <select name="gender" class="select"> 
          <option> Select here</option>
          <option
-
          <?php
 
-    if( isset( $_SESSION['gender']) &&  $_SESSION['gender'] == 'Male') {
-        echo "selected";
-       
-        }
+          if(isset($_SESSION['gender']) && $_SESSION['gender'] == 'Male') {
+              echo "selected";
+              
+          }
+        
+            ?>
+        
 
-        ?>
          
          > Male (M) </option>
          <option
-
-         
          <?php
-
-        if( isset( $_SESSION['gender']) &&  $_SESSION['gender'] == 'Female') {
-            echo "selected";
-       
-    }
-        ?>
+          if(isset($_SESSION['lastname']) &&  $_SESSION['gender'] == 'Female') {
+              echo " selected ";
+             
+          }
+        
+            ?>
+         
+      
          
          > Female (F) </option>
 
          <option> </option>
         </select>
 
-    </p>
+    </div>
  
-    <p>  
-        <label>Designation </label><br>
-         <select name="designation"> 
-         <option value=""> Select one </option>
+    <div class="form-field">  
+    <h3 class="section-title">Designation</h3>
+         <select name="designation" class="select"> 
          <option
+
          <?php
-              if( isset( $_SESSION['designation'])) {
-                echo "value" . $_SESSION['Medical team(MT)'];      
-          }
-        ?>
+
+        if(isset($_SESSION['gender']) && $_SESSION['designation'] == 'Medical team(MT)') {
+            echo "selected";
+
+        }
+
+  ?>
+        
         
          >Medical team(MT) </option>
          <option
-
          <?php
-              if( isset( $_SESSION['designation'])) {
-                echo "value" . $_SESSION['Patients'];      
+
+          if(isset($_SESSION['gender']) && $_SESSION['gender'] == 'Patient') {
+              echo "selected";
+             
           }
-
-
-        ?>
+        
+            ?>
+        
          
-         >Patients </option>
+         >Patient </option>
          <option> </option>
         </select>
 
-    </p>
-    
-    <p>  <label>Department </label> <br>
+    </div>
+    <div class="form-field">
+    <h3 class="section-title">Department</h3>
         <input 
         <?php
-          if( isset( $_SESSION['department'])) {
-              echo "value" . $_SESSION['civil'];      
-        }
-            ?>
+          if(isset($_SESSION['department'])) {
+              echo " value =" .  $_SESSION['department'];
+             
+          }
         
+            ?>
         type ="text" name="department" placeholder="department" />
 
-    </p>
+    </div>
 
-     <button type="submit"> Register </button>
+     <button type="submit" class="button"> Register </button>
 
  </form>
 
-<?php include 'lib/footer.php'; ?>
-
+ <?php include_once 'lib/footer.php';  ?>
 
 
 

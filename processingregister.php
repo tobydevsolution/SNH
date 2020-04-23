@@ -1,4 +1,7 @@
-<?php session_start();
+ <?php  require_once 'functions/users.php';
+        require_once 'functions/alert.php';
+  
+session_start();
 
 // collecting the data
 $errorCount = 0;
@@ -17,38 +20,52 @@ $department = $_POST['department'] != "" ?  $_POST['department'] : $errorCount++
 $_SESSION['firstname'] = $firstname;
 $_SESSION['lastname'] = $lastname;
 $_SESSION['email'] = $email;
-$_SESSION['password'] = $password;
+// $_SESSION['password'] = $password;
 $_SESSION['gender'] = $gender;
 $_SESSION['designation'] = $designation;
 $_SESSION['department'] = $department;
 
-if($errorCount > 0) {
-    //redirect back and display error
-    $_SESSION["error"] = "You have " . $errorCount . " errors in your submission";
-    header("Location: register.php");
 
-}else {
+if ($errorCount > 0) {
+    //Display proper messages to the user
+    // Give more accurate feedback to the user
+    $session_error = "you have " . $errorCount . " error"; 
+    if ($errorCount > 1) {
+        $session_error .= "s";
+    }
+    $session_error .=  " in your form submission";
+    $_SESSION["error"]= $session_error;
+}
 
-    //count all users
-    // $allUsers = scanddir("db/users");
-    // $countAllusers = count($allusers);
+else {
 
-    // $newUserId =  $countAllusers+1;
+    $newUserId =  ($countAllusers-1)+2;
+    $userObject = [
 
-   $userObject = [
-    'id' =>1,
-    'firstname' =>$firstname,
-    'lastname' =>$lastname,
-    'email' =>$email,
-    'password' =>$password,
-    'gender' =>$gender,
-    'designation' =>$designation,
-    'department' =>$department
-   ];
+        'id'=>$newUserId,
+        'firstname'=>$firstname,
+        'lastname'=>$lastname,
+       'email' =>$email,
+       'password' =>password_hash($password, PASSWORD_DEFAULT),
+       'gender' =>$gender,
+       'designation' =>$designation,
+       'department' =>$department
 
-   //save in the database
-   file_get_contents("db/users/" .$firstname . $lastname . ".json", json_encode($userObject));
-   $_SESSION["message"] = " Registration successful, you can now login!";
-   header("Location: register.php");
+      ];
+
+      // Check if the user already exists
+      $userExists = find_user($email);
+        if ($userExists) {
+           $_SESSION["error"] = "Registration failed user already exists ";
+           header("Location: register.php");
+           die();
+           
+        }
+    //save in the database
+    save_user($userObject);
+    $_SESSION["message"] = "Your Registration has been successful "  . $firstname;
+    header("Location: login.php");
+
+
 }
 
